@@ -1,0 +1,83 @@
+Work only on the TCRMMT production repository.
+
+Production path:
+/var/www/TCRMMT
+
+Correct production GitHub repository (reference only):
+mohamedamouseo-a11y/TCRMMM
+
+Patch transfer repository:
+https://github.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches
+
+Goal:
+Apply the Tamiyouz light Super Admin login UI patch safely.
+
+STRICT RULES:
+- Work only in /var/www/TCRMMT.
+- Do not inspect secrets/tokens/credentials.
+- Do not pull/reset/rebase/checkout the production repository.
+- Do not run migrations.
+- Do not modify authentication/session/CSRF/API logic.
+- Do not build yet.
+- Do not restart/reload PM2 yet.
+- Do not commit.
+- Do not push.
+
+Expected production scope only:
+1. server/_core/index.ts
+2. client/public/tamiyouz-superadmin-logo.png
+
+Existing Super Admin behavior that MUST remain unchanged:
+- loginEmail
+- loginPassword
+- loginBtn
+- /api/super-admin/login
+- existing session + CSRF behavior
+
+Before applying anything:
+cd /var/www/TCRMMT
+pwd
+git remote -v
+git branch --show-current
+git rev-parse HEAD
+git status --short
+git status --short -- server/_core/index.ts client/public/tamiyouz-superadmin-logo.png
+
+If server/_core/index.ts has unrelated uncommitted changes, STOP with SOURCE_CONFLICT.
+
+Download the package artifact from this public repository only. Verify the decoded ZIP SHA256 against SHA256SUMS.txt before extracting or executing anything. If the checksum differs, STOP.
+
+Inspect README.md, APPLY.sh, PATCH.py and VERIFY.py before execution. Confirm they affect only the two expected production files and contain no migration/database/auth/PM2/git-push/reset/checkout operations.
+
+Apply the supplied package from /var/www/TCRMMT, then run its supplied verification.
+
+After application run:
+cd /var/www/TCRMMT
+git diff --check
+git status --short
+git diff -- server/_core/index.ts
+test -f client/public/tamiyouz-superadmin-logo.png
+grep -n 'id="loginEmail"' server/_core/index.ts
+grep -n 'id="loginPassword"' server/_core/index.ts
+grep -n 'id="loginBtn"' server/_core/index.ts
+
+DO NOT build/restart/commit/push.
+
+Return exactly:
+REPOSITORY=
+PACKAGE_URL=
+SHA256=
+PREFLIGHT=
+SOURCE_CONFLICT=
+PACKAGE_SCOPE=
+APPLY=
+VERIFY=
+GIT_DIFF_CHECK=
+FILES_CHANGED=
+AUTH_LOGIC_CHANGED=
+BUILD=NOT_RUN
+PM2=NOT_TOUCHED
+COMMIT=NOT_RUN
+PUSH=NOT_RUN
+FIRST_ERROR=
+RESULT=
