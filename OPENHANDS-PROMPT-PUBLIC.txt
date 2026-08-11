@@ -1,0 +1,114 @@
+Work only on production project /var/www/TCRMMT.
+
+PUBLIC PATCH REPOSITORY:
+https://github.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches
+
+CORRECT PRODUCTION REPOSITORY:
+mohamedamouseo-a11y/TCRMMM
+
+Goal:
+Apply the light premium Tamiyouz Super Admin login redesign from the PUBLIC patch repo.
+
+IMPORTANT:
+- Public patch repo requires NO GitHub authentication.
+- Do NOT inspect secrets, tokens, credentials, SSH keys, or GitHub auth.
+- Do NOT work on TFCRM or TCRM Main source code.
+- TCRM Main may only be used by fetch_tamiyouz_logo.sh as a public logo asset source.
+- Work only in /var/www/TCRMMT.
+- Do NOT pull/reset/rebase/checkout production.
+- Do NOT run migrations.
+- Do NOT alter auth/session/CSRF/API behavior.
+- Do NOT build yet.
+- Do NOT restart/reload PM2.
+- Do NOT commit or push.
+
+Expected production scope ONLY:
+1) server/_core/index.ts
+2) client/public/tamiyouz-superadmin-logo.png
+
+Existing identifiers/behavior MUST survive:
+loginEmail
+loginPassword
+loginBtn
+/api/super-admin/login
+existing session + CSRF flow
+
+STEP 1 — PREFLIGHT
+cd /var/www/TCRMMT
+pwd
+git remote -v
+git branch --show-current
+git rev-parse HEAD
+git status --short
+git status --short -- server/_core/index.ts client/public/tamiyouz-superadmin-logo.png
+
+Confirm origin refers to mohamedamouseo-a11y/TCRMMM.
+If server/_core/index.ts contains unrelated uncommitted changes, STOP with SOURCE_CONFLICT.
+
+STEP 2 — DOWNLOAD PUBLIC PATCH FILES
+rm -rf /tmp/tcrmmm-superadmin-login-public
+mkdir -p /tmp/tcrmmm-superadmin-login-public
+cd /tmp/tcrmmm-superadmin-login-public
+
+BASE='https://raw.githubusercontent.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches/main'
+
+curl -fL "$BASE/apply_superadmin_login.py" -o apply_superadmin_login.py
+curl -fL "$BASE/verify_superadmin_login.py" -o verify_superadmin_login.py
+curl -fL "$BASE/fetch_tamiyouz_logo.sh" -o fetch_tamiyouz_logo.sh
+
+chmod 700 fetch_tamiyouz_logo.sh
+
+Read all three files before execution:
+sed -n '1,260p' apply_superadmin_login.py
+sed -n '1,220p' verify_superadmin_login.py
+sed -n '1,220p' fetch_tamiyouz_logo.sh
+
+Confirm they do not contain migration/database/auth rewrite/PM2/git push/reset/checkout commands.
+
+STEP 3 — FETCH APPROVED LOGO
+/tmp/tcrmmm-superadmin-login-public/fetch_tamiyouz_logo.sh /var/www/TCRMMT
+
+If LOGO_FETCH is not PASS, STOP. Do not substitute or invent another logo.
+
+STEP 4 — APPLY
+cd /var/www/TCRMMT
+python3 /tmp/tcrmmm-superadmin-login-public/apply_superadmin_login.py
+
+STEP 5 — VERIFY
+cd /var/www/TCRMMT
+python3 /tmp/tcrmmm-superadmin-login-public/verify_superadmin_login.py
+
+git diff --check
+git status --short
+git diff -- server/_core/index.ts
+
+test -s client/public/tamiyouz-superadmin-logo.png
+
+grep -n 'TAMIYOUZ_SUPER_ADMIN_LOGIN_LIGHT_V1' server/_core/index.ts
+grep -n 'id="loginEmail"' server/_core/index.ts
+grep -n 'id="loginPassword"' server/_core/index.ts
+grep -n 'id="loginBtn"' server/_core/index.ts
+
+Do NOT build.
+Do NOT restart PM2.
+Do NOT commit.
+Do NOT push.
+
+Return exactly:
+REPOSITORY=
+PATCH_REPO_ACCESS=
+PREFLIGHT=
+SOURCE_CONFLICT=
+LOGO_FETCH=
+PATCH_SCOPE=
+APPLY=
+VERIFY=
+GIT_DIFF_CHECK=
+FILES_CHANGED=
+AUTH_LOGIC_CHANGED=
+BUILD=NOT_RUN
+PM2=NOT_TOUCHED
+COMMIT=NOT_RUN
+PUSH=NOT_RUN
+FIRST_ERROR=
+RESULT=
