@@ -1,0 +1,37 @@
+TCRMMM GitHub Sync Control Center V4 — PUBLIC TRANSFER
+
+Public repository:
+mohamedamouseo-a11y/TCRMMM-OpenHands-Patches
+Branch: main
+
+Base64 package:
+GITHUB-SYNC-CONTROL-CENTER-V4/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V4-SLIM.zip.b64
+
+Decoded ZIP SHA256:
+861a6f6826e41f90e7e953b15efb8fcf6c538f71eab4f458d001aa4a927c0f76
+
+Target production path:
+/var/www/TCRMMT
+
+IMPORTANT:
+- This public transfer requires NO GitHub authentication.
+- Do NOT inspect or request PATs, SSH keys, tokens, .env secrets, or stored credentials.
+- Do NOT use the private TCRMMM repository to fetch the patch.
+- Do NOT pull/fetch/checkout/reset/rebase the production repository.
+- Do NOT build, restart PM2, run migrations, modify nginx, commit, or push in this step.
+- Expected source change after apply: server/_core/index.ts only.
+
+Workflow:
+1) Download the Base64 package from the public repository using raw.githubusercontent.com.
+2) Decode to /tmp/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V4-SLIM.zip.
+3) Verify SHA256 exactly matches the value above.
+4) Extract under /tmp only.
+5) Inspect README.md, PATCH.py, VERIFY.py, APPLY.sh and OPENHANDS-PROMPT.txt before execution.
+6) cd /var/www/TCRMMT
+7) Run the extracted APPLY.sh exactly once.
+8) Run the extracted VERIFY.py if APPLY.sh did not already complete verification.
+9) Run git status --short and git diff --check.
+10) STOP after verification. Do not build or deploy yet.
+
+Expected final marker:
+TCRMMM_GITHUB_SYNC_CONTROL_CENTER_V4_OK
