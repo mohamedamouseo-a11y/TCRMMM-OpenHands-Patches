@@ -1,0 +1,70 @@
+TCRMMM GitHub Sync Control Center V5 Exact UI Rebuild
+
+PUBLIC REPOSITORY:
+https://github.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches
+
+BRANCH:
+main
+
+BASE64 PACKAGE:
+GITHUB-SYNC-CONTROL-CENTER-V5-EXACT/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V5-EXACT-SLIM.zip.b64
+
+RAW URL:
+https://raw.githubusercontent.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches/main/GITHUB-SYNC-CONTROL-CENTER-V5-EXACT/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V5-EXACT-SLIM.zip.b64
+
+EXPECTED DECODED ZIP SHA256:
+2b828f4b635d2b5e527127a860f5ea86d2672b7a51b8a3b9ca5b73111e74f8bb
+
+PRODUCTION TARGET:
+/var/www/TCRMMT
+
+GOAL:
+Apply the V5 Exact UI Rebuild for the GitHub Advanced Sync section. This is a full section rebuild, not a CSS-only override. Preserve all existing GitHub Sync IDs, API calls, auth/session/CSRF behavior and backend routes.
+
+SAFETY:
+- Work only in /var/www/TCRMMT.
+- Do NOT request PAT, SSH keys, credentials, tokens, or secrets.
+- Do NOT access the private TCRMMM GitHub repo.
+- Do NOT pull/fetch/checkout/reset/rebase production.
+- Do NOT change git remote.
+- Do NOT run migrations.
+- Do NOT build yet.
+- Do NOT restart PM2.
+- Do NOT modify nginx.
+- Do NOT commit.
+- Do NOT push.
+- Expected source scope after apply: server/_core/index.ts only.
+- If server/_core/index.ts is already dirty before applying, STOP with SOURCE_CONFLICT.
+
+STEPS:
+1) Download the Base64 package from the public RAW URL above.
+2) Base64-decode it to /tmp/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V5-EXACT-SLIM.zip.
+3) Verify SHA256 exactly matches the expected SHA256 above.
+4) Extract under /tmp only.
+5) Inspect PATCH.py, VERIFY.py and APPLY.sh before execution.
+6) cd /var/www/TCRMMT
+7) Run the extracted APPLY.sh exactly once.
+8) Run:
+   git status --short
+   git diff --check
+   git diff -- server/_core/index.ts
+9) STOP. Do not build or restart.
+
+RETURN EXACTLY:
+SHA256_VERIFY=
+PREFLIGHT=
+SOURCE_CONFLICT=
+APPLY=
+VERIFY=
+CHECK=
+GIT_DIFF_CHECK=
+FILES_CHANGED=
+GITHUB_FUNCTIONAL_LOGIC_CHANGED=NO
+BUILD=NOT_RUN
+PM2=NOT_TOUCHED
+MIGRATION=NOT_RUN
+NGINX=NOT_TOUCHED
+COMMIT=NOT_RUN
+PUSH=NOT_RUN
+FIRST_ERROR=
+FINAL_MARKER=
