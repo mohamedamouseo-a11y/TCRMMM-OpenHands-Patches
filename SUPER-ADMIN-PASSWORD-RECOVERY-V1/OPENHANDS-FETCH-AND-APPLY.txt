@@ -1,0 +1,52 @@
+TCRMMM SUPER ADMIN PASSWORD RECOVERY V1
+
+Production target: /var/www/TCRMMT
+Canonical Primary Super Admin email: superadmin@tamiyouzalrowad.com
+
+The delivery ZIP is split into four Base64 text parts to avoid transport/cache corruption.
+Use this immutable package commit for ALL four parts:
+2a879881cc9f67e807d3255a97568fcb2b330fa1
+
+Fetch IN THIS EXACT ORDER:
+1) SUPER-ADMIN-PASSWORD-RECOVERY-V1/package.part00.b64
+2) SUPER-ADMIN-PASSWORD-RECOVERY-V1/package.part01.b64
+3) SUPER-ADMIN-PASSWORD-RECOVERY-V1/package.part02.b64
+4) SUPER-ADMIN-PASSWORD-RECOVERY-V1/package.part03.b64
+
+Concatenate with NO separators/newlines added between parts into:
+/tmp/TCRMMM-SUPER-ADMIN-PASSWORD-RECOVERY-V1-SLIM.zip.b64
+
+Expected concatenated Base64 character count:
+22392
+
+Decode to:
+/tmp/TCRMMM-SUPER-ADMIN-PASSWORD-RECOVERY-V1-SLIM.zip
+
+Expected decoded ZIP size:
+16793 bytes
+
+Expected decoded ZIP SHA256:
+cd30da74a8e548d1a5c9749090b6d2255888f79dcc81a84a7a42271db0de8dea
+
+VERIFY ALL THREE VALUES BEFORE EXTRACTION:
+- Base64 characters = 22392
+- ZIP bytes = 16793
+- SHA256 = cd30da74a8e548d1a5c9749090b6d2255888f79dcc81a84a7a42271db0de8dea
+
+If any value differs: STOP. Do not extract or apply.
+
+Extract the ZIP into /tmp.
+Read:
+/tmp/TCRMMM-SUPER-ADMIN-PASSWORD-RECOVERY-V1/OPENHANDS-PROMPT.txt
+
+Then copy the extracted package directory into a temporary working location, but run its APPLY.sh against /var/www/TCRMMT as instructed.
+
+IMPORTANT:
+- Apply + verify source only.
+- Do NOT run the Master DB migration yet.
+- Do NOT modify .env.
+- Do NOT build.
+- Do NOT restart PM2.
+- Do NOT modify nginx.
+- Do NOT commit or push.
+- Do NOT print passwords, SMTP/DB/JWT secrets, raw reset tokens, or reset URLs.
