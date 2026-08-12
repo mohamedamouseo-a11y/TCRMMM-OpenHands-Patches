@@ -1,0 +1,96 @@
+Work only on /var/www/TCRMMT.
+
+Goal:
+Redesign the existing Super Admin Audit page into a clean enterprise Audit Control Center and lock the browser/tab title to exactly:
+
+TCRMMT
+
+Audit UI requirements:
+- Keep the existing audit data source and behavior.
+- Keep the existing audit filters and export behavior.
+- Preserve these IDs exactly:
+  exportAuditBtn
+  auditTenantId
+  auditAction
+  auditSeverity
+  loadAuditBtn
+  auditBox
+- Desktop: compact two-column audit event feed.
+- Tablet/mobile: one-column feed.
+- Add a compact Audit Control Center hero, Live Audit Trail indicator, clean filter panel, and more readable event cards.
+
+Browser title requirements:
+- Initial HTML <title> must be exactly: TCRMMT
+- Navigation between Super Admin sections must NEVER change document.title.
+- Keep changing the in-app topbar/page identity normally; only the browser/tab title must stay TCRMMT.
+
+CRITICAL:
+- UI + browser title only.
+- Do NOT change GitHub Sync V5/V5.1.
+- Do NOT change audit APIs, loader, rendering behavior, filters, export behavior, auth/session/CSRF.
+- Do NOT inspect credentials/secrets.
+- Do NOT pull/fetch/checkout/reset/rebase.
+- Do NOT change git remote.
+- Do NOT build.
+- Do NOT restart PM2.
+- Do NOT run migrations.
+- Do NOT modify nginx.
+- Do NOT commit.
+- Do NOT push.
+
+Expected source scope ONLY:
+server/_core/index.ts
+
+Apply the following exact source changes:
+
+1) Replace the current <title>:
+<title>Super Admin · TCRM Multi</title>
+
+with:
+<title>TCRMMT</title>
+
+2) In updatePlatformPageIdentity(), replace:
+document.title=meta.title+' · TCRM Multi';
+
+with:
+document.title='TCRMMT'; /* TCRMMT_FIXED_BROWSER_TITLE_V1 */
+
+3) Replace the current sec-audit markup with a redesigned Audit Control Center while preserving the six IDs above exactly once.
+
+4) Add scoped CSS marker:
+TCRMMT_AUDIT_CONTROL_CENTER_V1
+
+5) Run:
+pnpm run check
+git diff --check -- server/_core/index.ts
+
+6) Verify:
+- <title>TCRMMT</title> present
+- old title absent
+- dynamic title assignment removed
+- document.title='TCRMMT' present
+- all six audit IDs exactly once
+- only server/_core/index.ts changed
+
+STOP after verification. Do not build or deploy.
+
+Return exactly:
+PREFLIGHT=
+APPLY=
+VERIFY=
+CHECK=
+GIT_DIFF_CHECK=
+FILES_CHANGED=
+AUDIT_UI=
+AUDIT_IDS=
+AUDIT_FUNCTIONAL_LOGIC_CHANGED=NO
+HTML_TITLE=TCRMMT
+DYNAMIC_TITLE_LOCK=
+BUILD=NOT_RUN
+PM2=NOT_TOUCHED
+MIGRATION=NOT_RUN
+NGINX=NOT_TOUCHED
+COMMIT=NOT_RUN
+PUSH=NOT_RUN
+FIRST_ERROR=
+FINAL_MARKER=TCRMMT_AUDIT_CONTROL_CENTER_V1_TITLE_TCRMMT_OK
