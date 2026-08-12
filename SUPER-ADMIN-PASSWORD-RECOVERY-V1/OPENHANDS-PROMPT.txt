@@ -1,0 +1,65 @@
+Work only on production source: /var/www/TCRMMT
+
+Apply the supplied TCRMMM Super Admin Password Recovery V1 patch.
+Canonical Primary Super Admin email: superadmin@tamiyouzalrowad.com
+
+IMPORTANT:
+- This package contains the implementation. Do NOT redesign or reimplement it.
+- Do NOT inspect/print passwords, SMTP credentials, JWT secrets, DB passwords, PATs, SSH keys, raw reset tokens, or reset URLs.
+- Do NOT alter tenant/user password recovery.
+- Do NOT pull/fetch/checkout/reset/rebase production.
+- Do NOT change git remote.
+- Do NOT modify .env.
+- Do NOT run the Master DB migration yet.
+- Do NOT build.
+- Do NOT restart PM2.
+- Do NOT modify nginx.
+- Do NOT commit or push.
+
+Expected source scope:
+1) server/routes/superAdmin.ts
+2) server/_core/index.ts
+3) scripts/apply-master-multitenant-hardening.mjs
+4) scripts/master-migration-super-admin-password-recovery-v1.sql
+5) server/superAdminPasswordRecoveryV1.test.ts
+
+Run:
+cd /var/www/TCRMMT
+bash APPLY.sh
+
+git status --short
+git diff --stat
+git diff --check
+
+STOP after source verification. Do NOT run:
+node scripts/apply-master-multitenant-hardening.mjs --only=super-admin-password-recovery
+
+Return exactly:
+PREFLIGHT=
+APPLY=
+VERIFY=
+CANONICAL_EMAIL=
+FORGOT_ENDPOINT=
+RESET_ENDPOINT=
+TOKEN_STORAGE=
+TOKEN_TTL_MINUTES=
+ACCOUNT_ENUMERATION_PROTECTION=
+RATE_LIMITING=
+SMTP_FAIL_CLOSED=
+PASSWORD_POLICY=
+SESSION_REVOCATION=
+LOGIN_IDS_PRESERVED=
+MIGRATION_CREATED=
+MIGRATION_RUN=NO
+TESTS=
+TYPECHECK=
+GIT_DIFF_CHECK=
+FILES_CHANGED=
+BUILD=NOT_RUN
+PM2=NOT_TOUCHED
+ENV_MODIFIED=NO
+DATABASE_MODIFIED=NO
+COMMIT=NOT_RUN
+PUSH=NOT_RUN
+FIRST_ERROR=
+FINAL_MARKER=
