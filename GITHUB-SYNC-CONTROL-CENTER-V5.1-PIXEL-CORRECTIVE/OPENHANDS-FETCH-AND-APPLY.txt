@@ -1,0 +1,36 @@
+TCRMMM GitHub Sync V5.1 Pixel Corrective
+
+PUBLIC REPOSITORY:
+https://github.com/mohamedamouseo-a11y/TCRMMM-OpenHands-Patches
+
+BRANCH:
+main
+
+PATCH PACKAGE:
+GITHUB-SYNC-CONTROL-CENTER-V5.1-PIXEL-CORRECTIVE/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V5.1-PIXEL-CORRECTIVE-SLIM.zip.b64
+
+DECODED ZIP SHA256:
+b49c4e14bc96b67a89f82dc5e4d896b377e45c336dc667051771768b8ac1746e
+
+Production target:
+/var/www/TCRMMT
+
+Instructions:
+1) Work only in /var/www/TCRMMT.
+2) Download the Base64 package above from this PUBLIC repository only. No authentication is required.
+3) Decode to /tmp/TCRMMM-GITHUB-SYNC-CONTROL-CENTER-V5.1-PIXEL-CORRECTIVE-SLIM.zip.
+4) Verify the decoded ZIP SHA256 exactly matches the value above. If not, STOP.
+5) Extract under /tmp only.
+6) Read PATCH.py, VERIFY.py, APPLY.sh and OPENHANDS-PROMPT.txt before execution.
+7) From /var/www/TCRMMT run the extracted APPLY.sh exactly once.
+8) Expected source scope after apply: server/_core/index.ts only.
+9) Do NOT inspect tokens, PATs, SSH keys, credentials, .env secrets, or GitHub auth.
+10) Do NOT pull/fetch/checkout/reset/rebase production.
+11) Do NOT change git remote.
+12) Do NOT build or restart PM2 yet.
+13) Do NOT run migrations or modify nginx.
+14) Do NOT commit or push.
+15) STOP after apply + verification and return the report requested by OPENHANDS-PROMPT.txt.
+
+Expected final marker:
+TCRMMM_GITHUB_SYNC_CONTROL_CENTER_V5_1_PIXEL_CORRECTIVE_OK
