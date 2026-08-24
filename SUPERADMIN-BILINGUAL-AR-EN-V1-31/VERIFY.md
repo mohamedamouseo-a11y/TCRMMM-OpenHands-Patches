@@ -7,6 +7,21 @@ V1.30 passed apply/build/dist/runtime and all prior regressions through Audit Lo
 
 Do not translate runtime/domain data: URLs, IPs, dates/timestamps, repository/branch names, commit SHAs, event payloads, IDs, role values. `GitHub` and `PAT` remain permitted technical tokens.
 
+## Corrected revision after first V1.31 apply attempt
+The first V1.31 evidence stopped before writing because the original patch incorrectly searched from `v122ArabicPatterns` to EOF and saw 16 later `return out;` anchors.
+
+This corrected revision bounds the Arabic target function between:
+- start: `const v122ArabicPatterns=(value)=>{`
+- end: `const v121PhraseArToEn=`
+
+It still requires exactly one `return out;` inside that bounded function and refuses unknown baselines.
+
+If the previous failed attempt left these **untracked helper files** in `/var/www/TCRMMT` root:
+- `VERIFY.md`
+- `apply_superadmin_bilingual_v1_31.py`
+
+first confirm they are untracked with `git status --short`, then remove **only those two untracked helper copies**. Do not remove or restore any tracked project file. Run the corrected patch from a temporary directory or directly from the fetched patch-repo working copy; do not copy helper files into the project root again.
+
 ## Preconditions
 Required source marker:
 - `SUPER_ADMIN_BILINGUAL_AR_EN_V1_30_GITHUB_SYNC_AR_FULL_PAGE_CLOSURE`
