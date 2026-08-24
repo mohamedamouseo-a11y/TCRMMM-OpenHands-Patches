@@ -24,6 +24,7 @@ REPLACES = [
 
 EN_START = "  const v122EnglishPatterns=(value)=>{"
 AR_START = "  const v122ArabicPatterns=(value)=>{"
+AR_END = "  const v121PhraseArToEn="
 RETURN_ANCHOR = "    return out;\n  };"
 
 EN_FINAL = r'''    // SUPER_ADMIN_BILINGUAL_AR_EN_V1_31_GITHUB_SYNC_FINAL_CANONICALIZATION
@@ -119,10 +120,12 @@ def main():
         raise SystemExit(f'V1.31 English function anchor count is {text.count(EN_START)}; refusing unknown baseline.')
     if text.count(AR_START) != 1:
         raise SystemExit(f'V1.31 Arabic function anchor count is {text.count(AR_START)}; refusing unknown baseline.')
+    if text.count(AR_END) != 1:
+        raise SystemExit(f'V1.31 Arabic end anchor count is {text.count(AR_END)}; refusing unknown baseline.')
     for old, new, _label, _expected in REPLACES:
         text = text.replace(old, new)
     text = insert_before_return(text, EN_START, AR_START, EN_FINAL, 'V1.31 English finalizer')
-    text = insert_before_return(text, AR_START, None, AR_FINAL, 'V1.31 Arabic finalizer')
+    text = insert_before_return(text, AR_START, AR_END, AR_FINAL, 'V1.31 Arabic finalizer')
     TARGET.write_text(text, encoding='utf-8')
     print('Applied Super Admin Bilingual V1.31 GitHub Sync final canonicalization runtime.')
 
